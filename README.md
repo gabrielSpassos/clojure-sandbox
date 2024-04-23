@@ -10,3 +10,8 @@
 ```shell
 clj
 ```
+
+- Run unit tests
+```shell
+clj -X:test
+```
