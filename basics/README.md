@@ -16,6 +16,5 @@ cljs.user=> $code on basics.clj
 - [x] https://clojure.org/guides/learn/functions
 - [x] https://clojure.org/guides/learn/sequential_colls
 - [x] https://clojure.org/guides/learn/hashed_colls
-- [ ] https://clojure.org/guides/learn/flow
-    - https://clojure.org/guides/learn/flow#_iteration_for_side_effects
+- [x] https://clojure.org/guides/learn/flow
 - [ ] https://clojure.org/guides/learn/namespaces
