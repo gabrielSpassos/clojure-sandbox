@@ -1,0 +1,30 @@
+{
+  ;; Project paths
+  :paths ["src"]
+
+  ;; Project dependencies
+  :deps {
+    ;; Clojure lib
+    org.clojure/clojurescript {:mvn/version "1.11.54"}
+    
+    ;; Core Matrix
+    net.mikera/core.matrix {:mvn/version "0.63.0"}
+  }
+
+  :aliases {
+    :test {
+      :extra-paths ["test"]
+      :extra-deps  {lambdaisland/kaocha {:mvn/version "1.77.1236"}}
+      :exec-fn     kaocha.runner/exec-fn
+      :exec-args   {:skip-meta :slow}
+    }
+    
+    :watch {
+      :exec-args {
+        :watch?     true
+        :skip-meta  :slow
+        :fail-fast? true
+      }
+    }
+  }
+}
