@@ -8,6 +8,9 @@
         number (range 3)] ; list of 0, 1, 2
   (prn [letter number]))
 
+(doseq [number (range 3)] ; list of 0, 1, 2
+  (prn [number]))
+
 (for [letter [:a :b]
       number (range 3)] ; list of 0, 1, 2
   [letter number])
