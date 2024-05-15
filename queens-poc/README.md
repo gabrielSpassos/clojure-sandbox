@@ -11,6 +11,16 @@ Q . . .
 . . Q . 
 ```
 
+## Project Structure
+```
+queens-poc            # Our project folder
+├─ src                # The CLJS source code for our project
+│  └─ core.cljs       # Our main file
+├─ test               # The CLJS test source code for our project
+│  └─ core_test.cljs  # Our test main file
+└─ deps.edn           # (macOS/Linux only) A file for listing our dependencies
+```
+
 ## Usage
 
 - Execute code

@@ -3,16 +3,15 @@
 (use 'clojure.core.matrix)
 
 (defn is-safe [matrix, row, column]
-  (dotimes [i column] 
+  (dotimes [index column] 
     (def matrix-row (get-row matrix row))
-    (println (get matrix-row i))
-    (if (= "Q" (get matrix-row i))
-      (do (println "Queen Found")
-        false)
-    )
+    (when (= "Q" (get matrix-row index))
+      (println "Achou queen")
+      false)
   )
 
-  true
+  (println "Saiu do if")
+  true ;;todo: change to true
 )
 
 (defn -main []

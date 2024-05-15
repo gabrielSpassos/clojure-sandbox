@@ -8,4 +8,4 @@
 
 (t/deftest is-safe-tests
   (t/testing "is safe works as expected"
-    (t/is (= true (sut/is-safe test_queen_matrix 1 1)))))
+    (t/is (= false (sut/is-safe test_queen_matrix 1 1)))))
