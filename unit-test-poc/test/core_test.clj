@@ -6,7 +6,7 @@
   (t/testing  "true equals false"
     (t/is (= true false))) ;; propose fail
   (t/testing "true is true"
-      (t/is (true? true))))
+    (t/is (true? true))))
 
 (t/deftest multiply-test
   (t/testing "multiplication works as expected"
