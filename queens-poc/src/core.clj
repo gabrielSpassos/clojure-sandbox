@@ -1,18 +1,6 @@
 (ns core)
 
-(use 'clojure.core.matrix)
-
-(defn is-safe [matrix, row, column]
-  (dotimes [index column] 
-    (def matrix-row (get-row matrix row))
-    (when (= "Q" (get matrix-row index))
-      (println "Achou queen")
-      false)
-  )
-
-  (println "Saiu do if")
-  true ;;todo: change to true
-)
+(def QUEEN "Q")
 
 (defn is-safe? [matrix row column]
   (let [queen? #(= % QUEEN)]
@@ -38,18 +26,24 @@
            (check-upper-diagonal row column)
            (check-lower-diagonal row column)))))
 
-;; Usage example:
-(def QUEEN "Q")
+(defn solve-queens-problem [matrix column n-queens-count]
+  (if (>= column n-queens-count)
+    true
+    (loop [i 0]
+      (if (>= i (count matrix))
+        false
+        (if (is-safe? matrix i column)
+          (let [new-matrix (assoc-in matrix [i column] QUEEN)]
+            (if (solve-queens-problem new-matrix (inc column) n-queens-count)
+              true
+              (recur (inc i))))
+          (recur (inc i)))))))
 
-(def matrix [["." "." "." "."]
-             [QUEEN "." "." "."]
-             ["." "." "." "."]
-             ["." "." "." "."]])
-
-(def row 0)
-(def column 0)
-
-(is-safe? matrix row column)
+(defn solve-n-queens-problem [n-queens-count]
+  (let [matrix (vec (repeat n-queens-count (vec (repeat n-queens-count "."))))]
+    (solve-queens-problem matrix 0 n-queens-count)
+    matrix))
 
 (defn -main []
-  (println "N Queen Problem POC"))
+  (println "N Queen Problem POC")
+  (println (solve-n-queens-problem 4)))
