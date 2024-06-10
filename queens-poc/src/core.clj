@@ -26,6 +26,23 @@
            (check-upper-diagonal row column)
            (check-lower-diagonal row column)))))
 
+(defn is-row-safe? [matrix row column]
+  (loop [i 0]
+    (if (= i column) ;; stops when the i reach the  column 
+      true
+      (if (= QUEEN (get-in matrix [row i])) ;; value on row and column (i) is Q?
+        false
+        (recur (inc i))))))
+
+(defn is-diagonal-safe? [matrix row column direction]
+  (loop [i row, j column]
+    (if (or (< i 0) (>= i (count matrix)) (>= j (count (get matrix 0))))
+      true
+      (if (= QUEEN (get-in matrix [i j]))
+        false
+        (recur (if (= direction :up) (dec i) (inc i))
+              (dec j))))))
+
 (defn solve-queens-problem [matrix column n-queens-count]
   (if (>= column n-queens-count)
     true
