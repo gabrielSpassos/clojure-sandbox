@@ -2,30 +2,6 @@
 
 (def QUEEN "Q")
 
-(defn is-safe? [matrix row column]
-  (let [queen? #(= % QUEEN)]
-    (letfn [(check-row [i]
-              (if (< i column)
-                (if (queen? (get-in matrix [row i]))
-                  false
-                  (recur (inc i)))
-                true))
-            (check-upper-diagonal [i j]
-              (if (and (>= i 0) (>= j 0))
-                (if (queen? (get-in matrix [i j]))
-                  false
-                  (recur (dec i) (dec j)))
-                true))
-            (check-lower-diagonal [i j]
-              (if (and (>= j 0) (< i (count matrix)))
-                (if (queen? (get-in matrix [i j]))
-                  false
-                  (recur (inc i) (dec j)))
-                true))]
-      (and (check-row 0)
-           (check-upper-diagonal row column)
-           (check-lower-diagonal row column)))))
-
 (defn is-row-safe? [matrix row column]
   (loop [i 0]
     (if (= i column) ;; stops when the i reach the  column 
@@ -36,29 +12,40 @@
 
 (defn is-diagonal-safe? [matrix row column direction]
   (loop [i row, j column]
-    (if (or (< i 0) (>= i (count matrix)) (>= j (count (get matrix 0))))
+    (if (or (< i 0) (>= i (count matrix)) (>= j (count (get matrix 0)))) ;; stops if row is < 0 OR row >= count matrix OR column >= count first row of matrix
       true
       (if (= QUEEN (get-in matrix [i j]))
         false
-        (recur (if (= direction :up) (dec i) (inc i))
-              (dec j))))))
+        (recur (if (= direction :up) (dec i) (inc i)) ;; if direction is up i-- else i++
+              (dec j)))))) ;; jj-- either directions
+
+(defn is-safe? [matrix row column]
+  (and (is-row-safe? matrix row column)
+       (is-diagonal-safe? matrix row column :up)
+       (is-diagonal-safe? matrix row column :down)))
 
 (defn solve-queens-problem [matrix column n-queens-count]
   (if (>= column n-queens-count)
     true
     (loop [i 0]
-      (if (>= i (count matrix))
+      (if (= i (count matrix))
         false
         (if (is-safe? matrix i column)
-          (let [new-matrix (assoc-in matrix [i column] QUEEN)]
-            (if (solve-queens-problem new-matrix (inc column) n-queens-count)
+          (do
+            (assoc-in matrix [i column] QUEEN)
+            (if (solve-queens-problem matrix (inc column) n-queens-count)
               true
-              (recur (inc i))))
+              (do
+                (assoc-in matrix [i column] ".")
+                (recur (inc i)))))
           (recur (inc i)))))))
 
-(defn solve-n-queens-problem [n-queens-count]
-  (let [matrix (vec (repeat n-queens-count (vec (repeat n-queens-count "."))))]
-    (solve-queens-problem matrix 0 n-queens-count)
+(defn create-matrix [nqueens-count]
+  (vec (repeat nqueens-count (vec (repeat nqueens-count ".")))))
+
+(defn solve-n-queens-problem [nqueens-count]
+  (let [matrix (create-matrix nqueens-count)]
+    (solve-queens-problem matrix 0 nqueens-count)
     matrix))
 
 (defn -main []
