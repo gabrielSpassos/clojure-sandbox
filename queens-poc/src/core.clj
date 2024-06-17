@@ -26,17 +26,19 @@
 
 (defn solve-queens-problem [matrix column n-queens-count]
   (if (>= column n-queens-count)
-    true
+    [true matrix]
     (loop [i 0]
       (if (= i (count matrix))
-        false
+        [false matrix]
         (if (is-safe? matrix i column)
           (do
-            (assoc-in matrix [i column] QUEEN)
-            (if (solve-queens-problem matrix (inc column) n-queens-count)
-              true
+            (def matrix-add-queen (assoc-in matrix [i column] QUEEN))
+            (println "Add queen:" matrix-add-queen)
+            (if (first (solve-queens-problem matrix-add-queen (inc column) n-queens-count))
+              [true matrix-add-queen]
               (do
-                (assoc-in matrix [i column] ".")
+                (def matrix-remove-queen (assoc-in matrix-add-queen [i column] "."))
+                (println "Remove Queen:" matrix-remove-queen)
                 (recur (inc i)))))
           (recur (inc i)))))))
 
@@ -45,9 +47,10 @@
 
 (defn solve-n-queens-problem [nqueens-count]
   (let [matrix (create-matrix nqueens-count)]
-    (solve-queens-problem matrix 0 nqueens-count)
-    matrix))
+    (second (solve-queens-problem matrix 0 nqueens-count))
+  )
+)
 
 (defn -main []
   (println "N Queen Problem POC")
-  (println (solve-n-queens-problem 4)))
+  (println "Final result:" (solve-n-queens-problem 4)))

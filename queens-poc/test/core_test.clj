@@ -2,11 +2,9 @@
   (:require [clojure.test :as t]
             [core :as sut]))
 
-(use 'clojure.core.matrix)
-
-(def test_unsafe_queen_matrix (matrix [["Q" "Q"] ["Q" "Q"]]))
-(def test_safe_queen_simple_matrix (matrix [["." "."] ["." "."]]))
-(def test_safe_queen_matrix (matrix [["." "Q" "." "."] ["." "." "." "Q"] ["Q" "." "." "."] ["." "." "Q" "."]]))
+(def test_unsafe_queen_matrix [["Q" "Q"] ["Q" "Q"]])
+(def test_safe_queen_simple_matrix [["." "."] ["." "."]])
+(def test_safe_queen_matrix [["." "Q" "." "."] ["." "." "." "Q"] ["Q" "." "." "."] ["." "." "Q" "."]])
 
 (t/deftest get-matrix-tests
   (t/testing "count matrix"
@@ -22,6 +20,14 @@
     (t/is (= 2 (count test_unsafe_queen_matrix)))
     (t/is (= 4 (count test_safe_queen_matrix)))
     (t/is (= 5 (count ["." "." "Q" "." "."])))
+  )
+)
+
+(def assoc-matrix-test [["."]])
+(t/deftest assoc-in-matrix-tests
+  (t/testing "assoc-in matrix"
+    (t/is (= [["Q"]] (assoc-in [["."]] [0 0] "Q")))
+    (t/is (= [["Q"]] (assoc-in assoc-matrix-test [0 0] "Q")))
   )
 )
 
@@ -57,14 +63,18 @@
     (t/is (= false (sut/is-safe? test_unsafe_queen_matrix 1 0)))
     (t/is (= false (sut/is-safe? test_unsafe_queen_matrix 1 1)))
     (t/is (= true (sut/is-safe? test_safe_queen_simple_matrix 0 0)))
+    (t/is (= true (sut/is-safe? test_safe_queen_simple_matrix 0 1)))
+    (t/is (= true (sut/is-safe? test_safe_queen_simple_matrix 1 0)))
+    (t/is (= true (sut/is-safe? test_safe_queen_simple_matrix 1 1)))
   )
 )
 
 (t/deftest solve-queens-problem-tests
   (t/testing "solve queens problem"
-    (t/is (= true (sut/solve-queens-problem [["Q"]] 1 1)))
-    (t/is (= true (sut/solve-queens-problem test_safe_queen_simple_matrix 0 1)))
-    (t/is (= false (sut/solve-queens-problem test_unsafe_queen_matrix 0 1)))
+    (t/is (= [true [["Q"]]] (sut/solve-queens-problem [["."]] 0 1)))
+    (t/is (= [false [["Q"]]] (sut/solve-queens-problem [["Q"]] 0 1)))
+    (t/is (= [true [["Q" "."] ["." "."]]] (sut/solve-queens-problem test_safe_queen_simple_matrix 0 1)))
+    (t/is (= [false [["Q" "Q"] ["Q" "Q"]]] (sut/solve-queens-problem test_unsafe_queen_matrix 0 1)))
   )
 )
 
@@ -78,4 +88,4 @@
 
 (t/deftest solve-n-queens-problem-tests
   (t/testing "solve n queens problem works as expected"
-    (t/is (= test_safe_queen_matrix (sut/solve-n-queens-problem 4)))))
+    (t/is (= [["." "." "Q" "."] ["Q" "." "." "."] ["." "." "." "Q"] ["." "Q" "." "."]] (sut/solve-n-queens-problem 4)))))
