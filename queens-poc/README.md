@@ -5,10 +5,10 @@
 Expected output
 
 ```
-. Q . .
-. . . Q 
-Q . . .
-. . Q . 
+. . Q .
+Q . . . 
+. . . Q
+. Q . . 
 ```
 
 ## Project Structure

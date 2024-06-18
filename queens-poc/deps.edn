@@ -6,9 +6,6 @@
   :deps {
     ;; Clojure lib
     org.clojure/clojurescript {:mvn/version "1.11.54"}
-    
-    ;; Core Matrix
-    net.mikera/core.matrix {:mvn/version "0.63.0"}
   }
 
   :aliases {
