@@ -7,7 +7,7 @@
 (def test_safe_queen_matrix [["." "Q" "." "."] ["." "." "." "Q"] ["Q" "." "." "."] ["." "." "Q" "."]])
 
 (t/deftest get-matrix-tests
-  (t/testing "count matrix"
+  (t/testing "get/get-in matrix"
     (t/is (= ["Q" "Q"] (get test_unsafe_queen_matrix 0)))
     (t/is (= ["Q" "." "." "."] (get test_safe_queen_matrix 2)))
     (t/is (= "Q" (get-in test_safe_queen_matrix [0 1])))
@@ -28,6 +28,7 @@
   (t/testing "assoc-in matrix"
     (t/is (= [["Q"]] (assoc-in [["."]] [0 0] "Q")))
     (t/is (= [["Q"]] (assoc-in assoc-matrix-test [0 0] "Q")))
+    (t/is (= [["."]] assoc-matrix-test))
   )
 )
 
