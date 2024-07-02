@@ -10,6 +10,16 @@
 (if false :truthy :falsey)
 (if nil :truthy :falsey)
 
+(if (>= 1 2) 
+    [true [1]] ;; returns a tuple [bool, array]
+    (loop [i 0]
+      (if (= 3 3) ;; stops when index is equals to matrix length (row length)
+        [false [2]]
+        [true [3]]
+      )
+    )
+)
+
 ;; multiple if options
 (if (even? 5)
   (do (println "even")
