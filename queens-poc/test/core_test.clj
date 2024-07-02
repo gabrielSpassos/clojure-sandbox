@@ -55,6 +55,18 @@
     (t/is (= false (sut/is-diagonal-safe? [["Q" "."] ["." "Q"]] 1 1 :up)))
     (t/is (= false (sut/is-diagonal-safe? [["." "." "Q"] ["." "Q" "."] ["Q" "." "."]] 2 0 :up)))
   )
+  (t/testing "is lower diagonal safe working as expected"
+    (t/is (= true (sut/is-diagonal-safe? [["." "Q"] ["Q" "."]] 0 0 :down)))
+    (t/is (= true (sut/is-diagonal-safe? [["Q" "."] ["." "Q"]] 0 1 :down)))
+    (t/is (= true (sut/is-diagonal-safe? [["Q" "Q"] ["Q" "Q"]] -1 0 :down))) ;; negative row case
+    (t/is (= true (sut/is-diagonal-safe? [["Q" "Q"] ["Q" "Q"]] 3 0 :down))) ;; row > count matrix
+    (t/is (= true (sut/is-diagonal-safe? [["Q" "Q"] ["Q" "Q"]] 2 0 :down))) ;; row = count matrix
+    (t/is (= true (sut/is-diagonal-safe? [["Q" "Q"] ["Q" "Q"]] 0 3 :down))) ;; column > count first row of matrix
+    (t/is (= true (sut/is-diagonal-safe? [["Q" "Q"] ["Q" "Q"]] 0 2 :down))) ;; column = count first row of matrix
+    (t/is (= false (sut/is-diagonal-safe? [["Q" "."] ["." "Q"]] 0 0 :down)))
+    (t/is (= false (sut/is-diagonal-safe? [["." "Q"] ["Q" "."]] 0 1 :down)))
+    (t/is (= false (sut/is-diagonal-safe? [["." "." "Q"] ["." "Q" "."] ["Q" "." "."]] 1 1 :down)))
+  )
 )
 
 (t/deftest is-safe-tests
