@@ -9,7 +9,11 @@
       true
       (if (= QUEEN (get-in matrix [row i])) ;; value on row and column (i) is Q?
         false
-        (recur (inc i))))))
+        (recur (inc i))
+      )
+    )
+  )
+)
 
 (defn is-diagonal-safe? [matrix row column direction]
   (loop [i row, j column]
@@ -28,7 +32,7 @@
 (defn is-safe? [matrix row column]
   (and (is-row-safe? matrix row column) ;; row is safe?
        (is-diagonal-safe? matrix row column :up) ;; upper diagonal is safe?
-       (is-diagonal-safe? matrix row column :down))) ;; lowe diagonal is safe?
+       (is-diagonal-safe? matrix row column :down))) ;; lower diagonal is safe?
 
 (defn solve-queens-problem [matrix column n-queens-count]
   (if (>= column n-queens-count) ;; stops when column is >= than n-queens-count
