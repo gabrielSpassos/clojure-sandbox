@@ -36,13 +36,19 @@
 
 (defn solve-queens-problem [matrix column n-queens-count]
   (if (>= column n-queens-count) ;; stops when column is >= than n-queens-count
-    [true matrix] ;; returns a tuple [bool, matrix]
+    (do
+      (println "Stop recursive call, column: " column)
+      [true matrix] ;; returns a tuple [bool, matrix]
+    )
 
     ;; else
     (loop [i 0]
       (if (= i (count matrix)) ;; stops when index is equals to matrix length (row length)
-        [false matrix]
-
+        (do
+          (println "Stop inner loop i:" i)
+          [false matrix]
+        )
+        
         ;; else
         (if (is-safe? matrix i column)
           (do
@@ -53,15 +59,17 @@
 
               ;; else
               (do
-                (def matrix-remove-queen (assoc-in matrix-add-queen [i column] "."))
-                (println "Remove Queen:" matrix-remove-queen)
+                (println "Else recursive call. Matrix:" matrix-add-queen)
                 (recur (inc i))
               )
             )
           )
 
           ;; else
-          (recur (inc i))
+          (do 
+            (println "row:" i, "column:" column "is not safe. Matrix:" matrix)
+            (recur (inc i))
+          )
         )
       )
     )
