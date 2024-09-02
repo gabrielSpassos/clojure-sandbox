@@ -37,7 +37,7 @@
 (defn solve-queens-problem [matrix column n-queens-count]
   (if (>= column n-queens-count) ;; stops when column is >= than n-queens-count
     (do
-      ;;(println "Stop recursive call, column: " column)
+      (println "Stop recursive call, column: " column)
       [true matrix] ;; returns a tuple [bool, matrix]
     )
 
@@ -45,7 +45,7 @@
     (loop [i 0]
       (if (= i (count matrix)) ;; stops when index is equals to matrix length (row length)
         (do
-          ;;(println "Stop inner loop i:" i)
+          (println "Stop inner loop i:" i)
           [false matrix]
         )
         
@@ -53,13 +53,13 @@
         (if (is-safe? matrix i column)
           (do
             (def matrix-add-queen (assoc-in matrix [i column] QUEEN)) ;; add "Q" to row:i column:column
-            ;;(println "Add queen:" matrix-add-queen) ;; since is immutable need to create a new variable 
+            (println "Add queen:" matrix-add-queen) ;; since is immutable need to create a new variable 
             (if (first (solve-queens-problem matrix-add-queen (inc column) n-queens-count)) ;; recursive call
               [true matrix-add-queen]
 
               ;; else
               (do
-                ;;(println "Else recursive call. Matrix:" matrix-add-queen)
+                (println "Else recursive call. Matrix:" matrix-add-queen)
                 (recur (inc i))
               )
             )
@@ -67,7 +67,7 @@
 
           ;; else
           (do 
-            ;;(println "row:" i, "column:" column "is not safe. Matrix:" matrix)
+            (println "row:" i, "column:" column "is not safe. Matrix:" matrix)
             (recur (inc i))
           )
         )
